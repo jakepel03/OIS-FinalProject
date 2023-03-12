@@ -1,0 +1,20 @@
+#kosarica {
+    margin-bottom: 10px;
+}
+
+#podrobnosti {
+    margin-top: 20px;
+}
+
+.destinacija button {
+    width: 80%;
+    margin-bottom: 5px;
+}
+
+.obicajno {
+    color: black;
+}
+
+#mapa_id {
+    height: 400px;
+}

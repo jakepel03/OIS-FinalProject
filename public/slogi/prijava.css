@@ -1,0 +1,7 @@
+.form-group {
+  margin-bottom: 10px;
+}
+
+.diagonala {
+  background: linear-gradient(to top right, black 60%, white 40%);
+}
