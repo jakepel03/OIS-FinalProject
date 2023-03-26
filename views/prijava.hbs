@@ -4,7 +4,7 @@
             <h3><i class="fa-solid fa-filter-circle-dollar"></i>Pregled dopustov</h3>
             <div class="row">
                 <div class="col">
-                    <input type="text" id="iskalniNiz" class="form-control d-inline-block"
+                    <input type="text" id="iskalniNiz" class="form-control d-inline-block rob senca"
                            placeholder="iskalni niz"/>
                 </div>
             </div>
@@ -19,7 +19,7 @@
                                 size="10"
                                 id="seznamRacunov"
                                 name="seznamRacunov"
-                                class="form-control form-control-sm odmik"
+                                class="form-control form-control-sm odmik rob senca"
                         >
                             {{#each seznamRacunov as |racun|}}
                                 <option
@@ -50,7 +50,7 @@
                         size="13"
                         id="seznamStrank"
                         name="seznamStrank"
-                        class="form-control form-control-sm odmik"
+                        class="form-control form-control-sm odmik rob senca"
                 >
                     {{#each seznamStrank as |stranka|}}
                         <option value="{{stranka.CustomerId}}">
@@ -74,37 +74,37 @@
             <span>V tabeli je navedena osnovna statistika o destinacijah ter njihovih lastnosti.</span>
 
             <table>
-                <tr>
-                    <td>Lastnosti</td>
+                <tr id="prvaVrstica">
+                    <td id="lastnosti" rowspan="6">Lastnosti</td>
                     <td></td>
-                    <td>Destinacije</td>
+                    <td id="destinacije" colspan="3">Destinacije</td>
                 </tr>
-                <tr>
+                <tr id="drugaVrstica">
                     <td class="diagonala"></td>
-                    <td>Turistične atrakcije</td>
-                    <td>Živalski vrtovi</td>
-                    <td>Hostli</td>
+                    <th>Turistične atrakcije</th>
+                    <th>Živalski vrtovi</th>
+                    <th>Hostli</th>
                 </tr>
-                <tr>
-                    <td>Vsi</td>
+                <tr class="ostaleVrstice">
+                    <th class="drugiStolpec">Vsi</th>
                     <td>{{ atrakcije.vsi }}</td>
                     <td>{{ zoo.vsi }}</td>
                     <td>{{ hostli.vsi }}</td>
                 </tr>
-                <tr>
-                    <td>Izven Ljubljane</td>
+                <tr class="ostaleVrstice">
+                    <th class="drugiStolpec">Izven Ljubljane</th>
                     <td>{{ atrakcije.izvenLjubljane }}</td>
                     <td>{{ zoo.izvenLjubljane }}</td>
                     <td>{{ hostli.izvenLjubljane }}</td>
                 </tr>
-                <tr>
-                    <td>Spletna stran</td>
+                <tr class="ostaleVrstice">
+                    <th class="drugiStolpec">Spletna stran</th>
                     <td>{{ atrakcije.spletnaStran }}</td>
                     <td>{{ zoo.spletnaStran }}</td>
                     <td>{{ hostli.spletnaStran }}</td>
                 </tr>
-                <tr>
-                    <td>Wikidata</td>
+                <tr class="ostaleVrstice">
+                    <th class="drugiStolpec">Wikidata</th>
                     <td>{{ atrakcije.wikidata }}</td>
                     <td>{{ zoo.wikidata }}</td>
                     <td>{{ hostli.wikidata }}</td>

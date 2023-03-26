@@ -3,5 +3,51 @@
 }
 
 .diagonala {
-  background: linear-gradient(to top right, black 60%, white 40%);
+  background: linear-gradient(to bottom right, #E4FDEA 50%, #CCF3D5 50%);
+}
+
+table {
+  margin: auto;
+}
+
+#lastnosti, #destinacije {
+  color: darkgrey;
+  font-style: italic;
+}
+
+#lastnosti {
+  vertical-align: center;
+}
+
+#destinacije {
+  text-align: center;
+}
+
+#prvaVrstica {
+  background: #E4FDEA;
+}
+
+#drugaVrstica {
+  background: #CCF3D5;
+}
+
+#drugaVrstica th {
+  border-bottom: 3px dotted green;
+}
+
+.drugiStolpec {
+  background: #CCF3D5;
+  border-right: 3px dotted green;
+}
+
+.ostaleVrstice td {
+  border: 1px solid darkgrey;
+}
+
+td {
+  padding: 3px;
+}
+
+th {
+  padding: 6px;
 }
