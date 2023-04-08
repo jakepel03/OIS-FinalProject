@@ -170,8 +170,37 @@ const vrniRacune = (povratniKlic) => {
 };
 
 function vrniHtmlZastavico(trenutnaStranka, povratniKlic) {
-    povratniKlic("");
+    vrniDrzavoStranke(trenutnaStranka, (drzava) => {
+        let imeDrzave = drzava;
+        if (imeDrzave != "USA") {
+            const url = `https://restcountries.com/v3.1/name/${imeDrzave}`;
+            fetch(url)
+                .then(odgovor => odgovor.json())
+                .then(podatki => {
+                    const cca2 = podatki[0].cca2;
+                    const urlFlag = `https://flagcdn.com/16x12/${cca2.toLowerCase()}.png`;
+                    fetch(urlFlag)
+                        .then(odgovor => {
+                            const zastavica = `<img src="https://flagcdn.com/16x12/${cca2.toLowerCase()}.png">`;
+                            povratniKlic(zastavica);
+                        });
+                });
+        }
+        // ce je USA, rocno nastavimo cca2
+        else if (imeDrzave == "USA") {
+            const cca2 = "us";
+            const urlFlag = `https://flagcdn.com/16x12/${cca2.toLowerCase()}.png`;
+            fetch(urlFlag)
+                .then(odgovor => {
+                    const zastavica = `<img src="https://flagcdn.com/16x12/${cca2.toLowerCase()}.png">`;
+                    povratniKlic(zastavica);
+                });
+        }
+
+    });
 }
+
+
 
 // Prikaz začetne strani
 streznik.get("/", (zahteva, odgovor) => {
