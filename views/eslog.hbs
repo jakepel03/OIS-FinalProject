@@ -19,7 +19,7 @@
                 <!-- BT-3: A code specifying the functional type of the Invoice. -->
                 <D_1001>380</D_1001>
             </C_C002>
-            <C_C106>
+         f   <C_C106>
                 <!-- BT-1: A unique identification of the Invoice. -->
                 <D_1004>RAC-12345-6789-XX</D_1004>
             </C_C106>
@@ -163,22 +163,22 @@
                 <D_3035>SE</D_3035>
                 <C_C080>
                     <!-- BT-27: The full formal name by which the Seller is registered in the national registry of legal entities or as a Taxable person or otherwise trades as a person or persons. -->
-                    <D_3036></D_3036>
+                    <D_3036>{{stranka.FirstName}} {{stranka.LastName}}</D_3036>
                 </C_C080>
                 <C_C059>
                     <!-- BT-35: The main address line in an address. -->
-                    <D_3042></D_3042>
+                    <D_3042>{{stranka.Address}}</D_3042>
                     <!-- BT-162: An additional address line in an address that can be used to give further details supplementing the main line. -->
                     <D_3042_3></D_3042_3>
                 </C_C059>
                 <!-- BT-37: The common name of the city, town or village, where the Seller address is located. -->
-                <D_3164></D_3164>
+                <D_3164>{{stranka.City}}</D_3164>
                 <C_C819>
                     <!-- BT-39: The subdivision of a country. -->
-                     <D_3228></D_3228>
+                     <D_3228>{{stranka.Country}}</D_3228>
                 </C_C819>
                 <!-- BT-38: The identifier for an addressable group of properties according to the relevant postal service. -->
-                 <D_3251></D_3251>
+                 <D_3251>{{stranka.PostalCode}}</D_3251>
                 <!-- BT-40: A code that identifies the country. -->
                 <D_3207></D_3207>
             </S_NAD>
@@ -227,7 +227,7 @@
                 <S_COM>
                     <C_C076>
                         <!-- BT-42: A phone number for the contact point. -->
-                        <D_3148></D_3148>
+                        <D_3148>{{stranka.Phone}}</D_3148>
                         <D_3155>TE</D_3155>
                     </C_C076>
                 </S_COM>
