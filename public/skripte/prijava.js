@@ -22,4 +22,26 @@ $(document).ready(() => {
           document.getElementById("skupnaCenaIzleta").innerHTML = `Skupna cena izleta znaša <b>${skupnaCena} €</b>, pri čemer je najdražja destinacija <b>${najdrazjaDestinacija}</b>.`;
         });
   });
+
+  // searchbar
+  const searchBar = document.querySelector("#iskalniNiz");
+
+  // spremljamo spremembe v iskanem nizu
+  searchBar.addEventListener("input", function () {
+    let iskaniNiz = searchBar.value.toLowerCase();
+
+    // izberemo vse racune, iteriramo cez njih
+    const vsiRacuni = document.querySelectorAll("#seznamRacunov option");
+    for (let i = 0; i < vsiRacuni.length; i++) {
+        let racun = vsiRacuni[i];
+        let vsebinaRacuna = racun.textContent.toLowerCase();
+
+        // ce trenutni pregledani racun vsebuje iskani niz (length >=3), ga obarvaj
+        if (vsebinaRacuna.includes(iskaniNiz) && iskaniNiz.length >= 3) {
+            racun.style.backgroundColor = 'linen';
+        } else {
+            racun.style.backgroundColor = '';
+        }
+    }
+  });
 });
