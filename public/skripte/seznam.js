@@ -72,7 +72,7 @@ const podrobnostiDestinacije = (id) => {
     // ce storitev /vec-o-destinaciji-api/:id vrača niz napaka, izpišite sporočilo:  Podatki niso na voljo.
     if (podatki == "napaka") {
       $("#sporocilo").html(
-          "<div class='alert alert-danger'>Podatki niso na voljo.</div>"
+          "<div class='alert alert-info'>Podatki niso na voljo.</div>"
       );
       return;
     }
