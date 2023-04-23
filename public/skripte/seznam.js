@@ -69,13 +69,37 @@ const premakniDestinacijoIzSeznamaVKosarico = (id, ime, lat, lng, azuriraj) => {
 // Vrni več podrobnosti destinacije
 const podrobnostiDestinacije = (id) => {
   $.get("/vec-o-destinaciji-api/" + id, (podatki) => {
+    // ce storitev /vec-o-destinaciji-api/:id vrača niz napaka, izpišite sporočilo:  Podatki niso na voljo.
+    if (podatki == "napaka") {
+      $("#sporocilo").html(
+          "<div class='alert alert-danger'>Podatki niso na voljo.</div>"
+      );
+      return;
+    }
+    // v niz shranimo vse vrednosti pri atributih localname
+    let naslovNiz = [];
+    for (let i = 0; i < podatki.address.length; i++) {
+      let naslov = podatki.address[i].localname;
+      naslovNiz.push(naslov);
+    }
+    let url = podatki.extratags.website;
+    let urlIzpis = "";
+    if (url != null) {
+      urlIzpis = `<b class="urlDestinacije">URL:</b> <a href='${url}'>Spletno mesto</a><br>`;
+    }
+    let datumVnosa = podatki.indexed_date;
     $("#sporocilo").html(
-      "<div class='alert alert-info'>" +
-        "<small>Tukaj bodo na voljo podrobnosti</small>" +
-        "</div>"
+        `<div class='alert alert-info'>
+        <small>
+          <b>Celoten naslov:</b> ${naslovNiz.join(", ")}<br>
+          ${urlIzpis}
+          <b>Datum vnosa:</b> ${datumVnosa}
+        </small>
+      </div>`
     );
   });
 };
+
 
 function prikazPoti() {
   // Izbrišemo obstoječo pot, če ta obstaja
