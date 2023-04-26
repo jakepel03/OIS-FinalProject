@@ -55,6 +55,7 @@ const premakniDestinacijoIzSeznamaVKosarico = (id, ime, lat, lng, azuriraj) => {
     });
     // Izbriši destinacijo iz desnega seznama
     destinacija_kosarica.parent().remove();
+    izbrisiMarker(destinacija_kosarica.find(".lat").text(), destinacija_kosarica.find(".lng").text());
 
     // Pokaži destinacijo v levem seznamu
     $("#destinacije #" + id).show();
@@ -204,5 +205,21 @@ function dodajMarker(lat, lng, vsebinaHTML, barvaAnglesko) {
 
   marker.addTo(mapa);
   markerji.push(marker);
+}
+
+// Izbrisemo marker v primeru odstranitve iz kosarice (marker identificiramo preko lat, lng)
+function izbrisiMarker(lat, lng) {
+  // pregledamo list ustvarjenih markerjev, ce se kaksen ujema z iskanim, ga odstranimo
+  for (let i = 0; i < markerji.length; i++) {
+    let marker = markerji[i];
+    // metoda getLatLng vrne objekt, ki vsebuje lat in lng, tako lahko dobimo obe vrednosti
+    if (marker.getLatLng().lat == lat && marker.getLatLng().lng == lng) {
+      // marker izbrisemo iz zemljevida
+      mapa.removeLayer(marker);
+      // marker izbrisemo iz arraya markerji (metoda splice nam omogoca izbris elementa na i-tem indeksu (torej zeljeni element) -> metoda .pop tu ne bi delovala pravilno)
+      markerji.splice(i, 1);
+      break;
+    }
+  }
 }
 
