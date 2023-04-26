@@ -55,6 +55,7 @@ const premakniDestinacijoIzSeznamaVKosarico = (id, ime, lat, lng, azuriraj) => {
     });
     // Izbriši destinacijo iz desnega seznama
     destinacija_kosarica.parent().remove();
+
     // Pokaži destinacijo v levem seznamu
     $("#destinacije #" + id).show();
   });
@@ -164,6 +165,7 @@ $(document).ready(() => {
       destinacija.find(".lng").text(),
       true
     );
+    dodajMarker(destinacija.find(".lat").text(), destinacija.find(".lng").text(), destinacija.find(".ime").text(), "blue");
   });
 
   // Klik na gumba za pripravo računov
@@ -203,3 +205,4 @@ function dodajMarker(lat, lng, vsebinaHTML, barvaAnglesko) {
   marker.addTo(mapa);
   markerji.push(marker);
 }
+
