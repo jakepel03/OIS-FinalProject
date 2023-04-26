@@ -343,9 +343,59 @@ streznik.get("/prijava", (zahteva, odgovor) => {
             for (let i = 0; i < stranke.length; i++) stranke[i].stRacunov = 0;
 
             vrniSeznamDestinacij((napaka, destinacije) => {
-                let atrakcije = {};
-                let zoo = {};
-                let hostli = {};
+                let atrakcije = [];
+                let zoo = [];
+                let hostli = [];
+
+                // naredimo arraye za vse tipe destinacij
+                for (let i = 0; i < destinacije.length; i++) {
+                    if (destinacije[i].vrstaDestinacije == "atrakcija") {
+                       atrakcije.push(destinacije[i]);
+                    } else if (destinacije[i].vrstaDestinacije == "živalski vrt") {
+                        zoo.push(destinacije[i]);
+                    } else if (destinacije[i].vrstaDestinacije == "hostel") {
+                        hostli.push(destinacije[i]);
+                    }
+                }
+
+                // pregledamo atrakcije, povezemo s tabelo
+                let atrLJ = 0;
+                let atrURL = 0;
+                let atrWiki = 0;
+                for (let i = 0; i < atrakcije.length; i++) {
+                    if (atrakcije[i].mesto != null && atrakcije[i].mesto != "Ljubljana")
+                        atrLJ++;
+                    if (atrakcije[i].website != null)
+                        atrURL++;
+                    if (atrakcije[i].wikidata != null)
+                        atrWiki++;
+                }
+
+                // pregledamo zoo-je, povezemo s tabelo
+                let zooLJ = 0;
+                let zooURL = 0;
+                let zooWiki = 0;
+                for (let i = 0; i < zoo.length; i++) {
+                    if (zoo[i].mesto != null && zoo[i].mesto != "Ljubljana")
+                        zooLJ++;
+                    if (zoo[i].website != null)
+                        zooURL++;
+                    if (zoo[i].wikidata != null)
+                        zooWiki++;
+                }
+
+                // pregledamo hostle, povezemo s tabelo
+                let hostliLJ = 0;
+                let hostliURL = 0;
+                let hostliWiki = 0;
+                for (let i = 0; i < hostli.length; i++) {
+                    if (hostli[i].mesto != null && hostli[i].mesto != "Ljubljana")
+                        hostliLJ++;
+                    if (hostli[i].website != null)
+                        hostliURL++;
+                    if (hostli[i].wikidata != null)
+                        hostliWiki++;
+                }
 
                 odgovor.render("prijava", {
                     sporocilo: "",
@@ -353,9 +403,10 @@ streznik.get("/prijava", (zahteva, odgovor) => {
                     podnaslov: "Prijavna stran",
                     seznamStrank: stranke,
                     seznamRacunov: racuni,
-                    atrakcije: atrakcije,
-                    zoo: zoo,
-                    hostli: hostli
+                    atrakcije: {vsi: atrakcije.length, izvenLjubljane: atrLJ, spletnaStran: atrURL, wikidata: atrWiki},
+                    zoo: {vsi: zoo.length, izvenLjubljane: zooLJ, spletnaStran: zooURL, wikidata: zooWiki},
+                    hostli: {vsi: hostli.length, izvenLjubljane: hostliLJ, spletnaStran: hostliURL, wikidata: hostliWiki}
+
                 });
             });
         });

@@ -139,7 +139,7 @@ $(document).ready(() => {
     FRI_LAT,
     FRI_LNG,
     "Fakulteta za računalništvo in informatiko",
-    "yellow"
+    "black"
   );
 
   // Posodobi podatke iz košarice na spletni strani
