@@ -18,7 +18,6 @@ const premakniDestinacijoIzSeznamaVKosarico = (id, ime, lat, lng, azuriraj) => {
     $.get("/kosarica/" + id, (podatki) => {
       /* Dodaj izbrano destinacijo v sejo */
     });
-
   // Dodaj destnacijo v desni seznam
   $("#kosarica").append(
     "<div id='" +
@@ -56,7 +55,7 @@ const premakniDestinacijoIzSeznamaVKosarico = (id, ime, lat, lng, azuriraj) => {
     // Izbriši destinacijo iz desnega seznama
     destinacija_kosarica.parent().remove();
     izbrisiMarker(destinacija_kosarica.find(".lat").text(), destinacija_kosarica.find(".lng").text());
-
+    prikazPoti();
     // Pokaži destinacijo v levem seznamu
     $("#destinacije #" + id).show();
   });
@@ -108,7 +107,14 @@ function prikazPoti() {
   if (pot != null) mapa.removeControl(pot);
 
   // Dodamo pot
-  // npr. pot = L.Routing.control ...
+  pot = L.Routing.control({
+    waypoints: tockePoti,
+    lineOptions: {
+      styles: [{color: '#4E732E', weight: 5, dashArray: '4.75'}]
+    },
+    language: 'sl',
+    show: false // želimo minimiziran prikaz poteka poti (obstaja pa moznost povecanja zgoraj desno)
+  }).addTo(mapa);
 
   // podrobnosti o poti, ko je ta najdena
   pot.on("routesfound", function (e) {
@@ -139,7 +145,7 @@ $(document).ready(() => {
     FRI_LAT,
     FRI_LNG,
     "Fakulteta za računalništvo in informatiko",
-    "black"
+    "yellow"
   );
 
   // Posodobi podatke iz košarice na spletni strani
@@ -167,6 +173,7 @@ $(document).ready(() => {
       true
     );
     dodajMarker(destinacija.find(".lat").text(), destinacija.find(".lng").text(), destinacija.find(".ime").text(), "blue");
+    prikazPoti();
   });
 
   // Klik na gumba za pripravo računov
@@ -200,6 +207,14 @@ function dodajMarker(lat, lng, vsebinaHTML, barvaAnglesko) {
   // in barvo ikone, glede na tip
   var marker = L.marker([lat, lng], { icon: ikona });
 
+
+  var tocka = L.Routing.waypoint([lat, lng], {name: vsebinaHTML});
+  // nocemo, da nam fri vedno doda v tockePoti, ceprav ga nismo dodali v kosarico
+  if (vsebinaHTML != "Fakulteta za računalništvo in informatiko") {
+    tockePoti.push(tocka);
+  }
+
+
   // Izpišemo želeno sporočilo v oblaček
   marker.bindPopup(vsebinaHTML).openPopup();
 
@@ -218,6 +233,16 @@ function izbrisiMarker(lat, lng) {
       mapa.removeLayer(marker);
       // marker izbrisemo iz arraya markerji (metoda splice nam omogoca izbris elementa na i-tem indeksu (torej zeljeni element) -> metoda .pop tu ne bi delovala pravilno)
       markerji.splice(i, 1);
+      break;
+    }
+  }
+
+  for (let i = 0; i < tockePoti.length; i++) {
+    let tocka = tockePoti[i];
+    // metoda getLatLng vrne objekt, ki vsebuje lat in lng, tako lahko dobimo obe vrednosti
+    if (tocka.latLng.lat && tocka.latLng.lng == lng) {
+      // tocko izbrisemo iz arraya (metoda splice nam omogoca izbris elementa na i-tem indeksu (torej zeljeni element) -> metoda .pop tu ne bi delovala pravilno)
+      tockePoti.splice(i, 1);
       break;
     }
   }
