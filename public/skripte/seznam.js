@@ -18,7 +18,6 @@ const premakniDestinacijoIzSeznamaVKosarico = (id, ime, lat, lng, azuriraj) => {
     $.get("/kosarica/" + id, (podatki) => {
       /* Dodaj izbrano destinacijo v sejo */
     });
-
   // Dodaj destnacijo v desni seznam
   $("#kosarica").append(
     "<div id='" +
@@ -55,6 +54,8 @@ const premakniDestinacijoIzSeznamaVKosarico = (id, ime, lat, lng, azuriraj) => {
     });
     // Izbriši destinacijo iz desnega seznama
     destinacija_kosarica.parent().remove();
+    izbrisiMarker(destinacija_kosarica.find(".lat").text(), destinacija_kosarica.find(".lng").text());
+    prikazPoti();
     // Pokaži destinacijo v levem seznamu
     $("#destinacije #" + id).show();
   });
@@ -69,20 +70,51 @@ const premakniDestinacijoIzSeznamaVKosarico = (id, ime, lat, lng, azuriraj) => {
 // Vrni več podrobnosti destinacije
 const podrobnostiDestinacije = (id) => {
   $.get("/vec-o-destinaciji-api/" + id, (podatki) => {
+    // ce storitev /vec-o-destinaciji-api/:id vrača niz napaka, izpišite sporočilo:  Podatki niso na voljo.
+    if (podatki == "napaka") {
+      $("#sporocilo").html(
+          "<div class='alert alert-info'>Podatki niso na voljo.</div>"
+      );
+      return;
+    }
+    // v niz shranimo vse vrednosti pri atributih localname
+    let naslovNiz = [];
+    for (let i = 0; i < podatki.address.length; i++) {
+      let naslov = podatki.address[i].localname;
+      naslovNiz.push(naslov);
+    }
+    let url = podatki.extratags.website;
+    let urlIzpis = "";
+    if (url != null) {
+      urlIzpis = `<b class="urlDestinacije">URL:</b> <a href='${url}'>Spletno mesto</a><br>`;
+    }
+    let datumVnosa = podatki.indexed_date;
     $("#sporocilo").html(
-      "<div class='alert alert-info'>" +
-        "<small>Tukaj bodo na voljo podrobnosti</small>" +
-        "</div>"
+        `<div class='alert alert-info'>
+        <small>
+          <b>Celoten naslov:</b> ${naslovNiz.join(", ")}<br>
+          ${urlIzpis}
+          <b>Datum vnosa:</b> ${datumVnosa}
+        </small>
+      </div>`
     );
   });
 };
+
 
 function prikazPoti() {
   // Izbrišemo obstoječo pot, če ta obstaja
   if (pot != null) mapa.removeControl(pot);
 
   // Dodamo pot
-  // npr. pot = L.Routing.control ...
+  pot = L.Routing.control({
+    waypoints: tockePoti,
+    lineOptions: {
+      styles: [{color: '#4E732E', weight: 5, dashArray: '4.75'}]
+    },
+    language: 'sl',
+    show: false // želimo minimiziran prikaz poteka poti (obstaja pa moznost povecanja zgoraj desno)
+  }).addTo(mapa);
 
   // podrobnosti o poti, ko je ta najdena
   pot.on("routesfound", function (e) {
@@ -140,6 +172,8 @@ $(document).ready(() => {
       destinacija.find(".lng").text(),
       true
     );
+    dodajMarker(destinacija.find(".lat").text(), destinacija.find(".lng").text(), destinacija.find(".ime").text(), "blue");
+    prikazPoti();
   });
 
   // Klik na gumba za pripravo računov
@@ -173,9 +207,44 @@ function dodajMarker(lat, lng, vsebinaHTML, barvaAnglesko) {
   // in barvo ikone, glede na tip
   var marker = L.marker([lat, lng], { icon: ikona });
 
+
+  var tocka = L.Routing.waypoint([lat, lng], {name: vsebinaHTML});
+  // nocemo, da nam fri vedno doda v tockePoti, ceprav ga nismo dodali v kosarico
+  if (vsebinaHTML != "Fakulteta za računalništvo in informatiko") {
+    tockePoti.push(tocka);
+  }
+
+
   // Izpišemo želeno sporočilo v oblaček
   marker.bindPopup(vsebinaHTML).openPopup();
 
   marker.addTo(mapa);
   markerji.push(marker);
 }
+
+// Izbrisemo marker v primeru odstranitve iz kosarice (marker identificiramo preko lat, lng)
+function izbrisiMarker(lat, lng) {
+  // pregledamo list ustvarjenih markerjev, ce se kaksen ujema z iskanim, ga odstranimo
+  for (let i = 0; i < markerji.length; i++) {
+    let marker = markerji[i];
+    // metoda getLatLng vrne objekt, ki vsebuje lat in lng, tako lahko dobimo obe vrednosti
+    if (marker.getLatLng().lat == lat && marker.getLatLng().lng == lng) {
+      // marker izbrisemo iz zemljevida
+      mapa.removeLayer(marker);
+      // marker izbrisemo iz arraya markerji (metoda splice nam omogoca izbris elementa na i-tem indeksu (torej zeljeni element) -> metoda .pop tu ne bi delovala pravilno)
+      markerji.splice(i, 1);
+      break;
+    }
+  }
+
+  for (let i = 0; i < tockePoti.length; i++) {
+    let tocka = tockePoti[i];
+    // metoda getLatLng vrne objekt, ki vsebuje lat in lng, tako lahko dobimo obe vrednosti
+    if (tocka.latLng.lat && tocka.latLng.lng == lng) {
+      // tocko izbrisemo iz arraya (metoda splice nam omogoca izbris elementa na i-tem indeksu (torej zeljeni element) -> metoda .pop tu ne bi delovala pravilno)
+      tockePoti.splice(i, 1);
+      break;
+    }
+  }
+}
+
