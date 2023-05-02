@@ -303,7 +303,26 @@ streznik.get("/izpisiRacun/:oblika", (zahteva, odgovor) => {
                     destinacija.vrednost = destinacija.kolicina * destinacija.cena;
                     destinacija.davcnaStopnja = 22;
 
-                    destinacija.popustStopnja = 0;
+                    let ime = destinacija.ime.toUpperCase();
+                    let maxPonovitev = 0;
+                    let maxChar = ''.charCodeAt(0);
+                    console.log(ime);
+                    console.log(ime.length);
+
+                    for (let znak = 'A'.charCodeAt(0); znak <= 'Z'.charCodeAt(0); znak++) {
+                        let stevec = 0;
+                        for (let i = 0; i < ime.length; i++) {
+                            if (ime.charAt(i).charCodeAt(0) == znak) {
+                                stevec++;
+                            }
+                        }
+                        if (stevec > maxPonovitev) {
+                            maxPonovitev = stevec;
+                            maxChar = znak;
+                        }
+                    }
+                    let popust = maxChar;
+                    destinacija.popustStopnja = popust;
 
                     destinacija.popust = destinacija.kolicina * destinacija.cena * (destinacija.popustStopnja / 100);
 
