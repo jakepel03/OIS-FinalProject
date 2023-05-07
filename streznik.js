@@ -178,30 +178,18 @@ function vrniHtmlZastavico(trenutnaStranka, povratniKlic) {
                 .then(odgovor => odgovor.json())
                 .then(podatki => {
                     const cca2 = podatki[0].cca2;
-                    const urlFlag = `https://flagcdn.com/16x12/${cca2.toLowerCase()}.png`;
-                    fetch(urlFlag)
-                        .then(odgovor => {
-                            const zastavica = `<img src="https://flagcdn.com/16x12/${cca2.toLowerCase()}.png">`;
-                            povratniKlic(zastavica);
-                        });
+                    const zastavica = `<img src="https://flagcdn.com/16x12/${cca2.toLowerCase()}.png">`;
+                    povratniKlic(zastavica);
                 });
         }
         // ce je USA, rocno nastavimo cca2
         else if (imeDrzave == "USA") {
             const cca2 = "us";
-            const urlFlag = `https://flagcdn.com/16x12/${cca2.toLowerCase()}.png`;
-            fetch(urlFlag)
-                .then(odgovor => {
-                    const zastavica = `<img src="https://flagcdn.com/16x12/${cca2.toLowerCase()}.png">`;
-                    povratniKlic(zastavica);
-                });
+            const zastavica = `<img src="https://flagcdn.com/16x12/${cca2.toLowerCase()}.png">`;
+            povratniKlic(zastavica);
         }
-
     });
 }
-
-
-
 // Prikaz začetne strani
 streznik.get("/", (zahteva, odgovor) => {
     // v primeru, da uporabnik ni prijavljen
