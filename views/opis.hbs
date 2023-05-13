@@ -9,13 +9,18 @@
     <div class="card-body">
       <!-- ZAČETEK: Opis ideje, ki jo funkcionalnost podpira -->
       <p>
-        <strong><i class="fa-solid fa-list-check me-1"></i>TO-DO</strong>: Na
-        tem mestu je potrebno dodati
-        <strong>osnovni opis ideje rešitve</strong>
-        (kakšen je osnovni SCENARIJ UPORABE, KDO je ciljna publika (gost ali
-        prijavljen uporabnik), za kakšen NAMEN se funkcionalnost uporablja).
+          Implementirana funkcionalnost omogoča hitro pridobivanje podatkov o vremenu za naslednjih 7 dni v poljubnem izbranem kraju.
+          Namenjena je neprijavljenim uporabnikom, katerim omogoča, da hitro pridobijo informacije o vremenskih razmerah v želenem kraju. <br><br>
+          Namen je predvsem informativen, saj uporabnikom omogoča vpogled v 7-dnevno vremensko napoved, kar jim pomaga načrtovati svoje dejavnosti oziroma izlete. <br><br>
+          Prvo okno na osnovni strani omogoča uporabniku, da vpiše želeno destinacijo in jo shrani v podatkovno bazo,
+          drugo okno pa omogoča uporabniku izbiro katerekoli destinacije iz baze in prikaz podatkov o vremenu za izbrano lokacijo, in sicer maksimalno hitrost vetra,
+          povprečno temperaturo ter kratek opis vremena. <br><br>
+          Glavna ideja oziroma motiv je, da uporabnikom naše spletne strani ponudimo dodatno funkcionalnost, ki dopolnjuje/omogoča celovit
+          načrt izleta oziroma potovanja kar znotraj spletne strani.
+          Tako lahko uporabniki najprej v bazo dodajo željene lokacije, nato pregledajo vreme na teh lokacijah in se na podlagi tega odločijo, kam se
+          bodo odpravili. Nadaljnja funkcionalnost (izbor destinacij, dodajanje v košarico, prikaz na zemljevidu, izdaja računa) pa je na spletni strani
+          že implementiran.
       </p>
-      <p class="text-muted mb-0">Opis naj ne bo daljši od 200 besed.</p>
       <!-- KONEC: Opis ideje, ki jo aplikacija podpira -->
     </div>
   </div>
@@ -29,11 +34,13 @@
     <div class="card-body">
       <!-- ZAČETEK: Uporabljeni zunanji viri podatkov -->
       <p class="mb-0">
-        <strong><i class="fa-solid fa-list-check me-1"></i>TO-DO</strong>: Na
-        tem mestu je potrebno navesti zunanji vir podatkov (URL naslov), na
-        kakšen način ste ga uporabili (neposredni API klic, uvožena statična
-        datoteka ipd.) in kaj je bil namen uporabe (kako se vključuje v osnovno
-        idejo aplikacije).
+        Za zunanji vir sem uporabil API ponudnika visualcrossing.com, ki vrača podatke o vremenu na iskani lokaciji. Ta API sem izbral, ker je zelo
+          prilagodljiv v smislu izbire vrnjenih podatkov. <br><br>
+          Točen URL naslov, ki sem ga uporabil: https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${imeDestinacije}/next7days?unitGroup=metric&elements=datetime%2CdatetimeEpoch%2Cname%2Clatitude%2Clongitude%2Ctempmax%2Ctempmin%2Ctemp%2Cwindspeed%2Cwindspeedmax%2Cpressure%2Cuvindex%2Csunrise%2Csunset%2Cconditions%2Cdescription&include=days&key=FQJKS22Y4MZ97GQXL5C7ZBFV6&contentType=json <br><br>
+          Osnovni URL naslov za ta API je precej krajši, vendar sem zaradi preglednosti vrnjenih podatkov dodal še nekaj filtrov, kar je precej vplivalo na dolžino URL-ja.
+          Vir sem uporabil z neposrednim API klicom, in sicer za vsak vnos kraja v levem oknu ter pritisk na tipko "Dodaj destinacijo v bazo" se je klical zgoraj
+          omenjeni API, vrnil podatke o vremenu na iskanem kraju, ti podatki pa so se nato shranili v Teaching API bazo in so nato služili za prikaz
+          podatkov o vremenu (v desnem oknu).
       </p>
       <!-- KONEC: Uporabljeni zunanji viri podatkov -->
     </div>
