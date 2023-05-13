@@ -110,7 +110,7 @@ function prikazPoti() {
   pot = L.Routing.control({
     waypoints: tockePoti,
     lineOptions: {
-      styles: [{color: '#4E732E', weight: 5, dashArray: '4.75'}]
+      styles: [{color: '#4E732E', weight: '5', dashArray: '4.75'}]
     },
     language: 'sl',
     show: false // želimo minimiziran prikaz poteka poti (obstaja pa moznost povecanja zgoraj desno)

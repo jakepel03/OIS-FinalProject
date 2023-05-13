@@ -116,6 +116,42 @@
             <span>V grafu prikažite poljubno vizualizacijo podatkov: podatkovna baza, zunanji vir ali oboje.</span>
             <div id="vsebnikGrafa" style="height: 300px; width: 100%; background-color: lightgray"></div>
         </div>
+
+            <div class="col-md-6">
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <div class="col-lg-8 col-md-8 col-sm-8 text-center mx-auto">
+                                Dodaj destinacijo v podatkovno bazo
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <span class="badge bg-secondary" style="margin-bottom: 5px">Ime destinacije</span><input id="iskanaDestinacija" type="text" class="form-control form-control-sm mb-2" placeholder="Vnesi ime kraja">
+                        <button type="button" class="btn btn-primary btn-sm" onclick="narediPoizvedbo()">
+                            Dodaj destinacijo v bazo</button><span id="kreirajSporocilo"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                Izberi destinacijo in pridobi podatke o vremenu
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <select class="form-select form-select-sm" id="izborDestinacije">
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <button type="button" class="btn btn-primary btn-sm" onclick="izpisPodatkov()">
+                            Izpiši podatke o vremenu na izbrani destinaciji</button><span id="izpisiPodatke"></span>
+                    </div>
+                </div>
+            </div>
     </div>
 </div>
 
@@ -123,3 +159,5 @@
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script src="skripte/prijava.js"></script>
+<script src="skripte/funkcionalnost.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
