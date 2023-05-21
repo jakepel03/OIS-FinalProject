@@ -169,8 +169,8 @@ const vrniRacune = (povratniKlic) => {
          WHERE  Customer.CustomerId = Invoice.CustomerId", (napaka, vrstice) => povratniKlic(napaka, vrstice));
 };
 
-function vrniHtmlZastavico(trenutnaStranka, povratniKlic) {
-    vrniDrzavoStranke(trenutnaStranka, (drzava) => {
+function vrniHtmlZastavico(strankaId, povratniKlic) {
+    vrniDrzavoStranke(strankaId, (drzava) => {
         let imeDrzave = drzava;
         if (imeDrzave != "USA") {
             const url = `https://restcountries.com/v3.1/name/${imeDrzave}`;
