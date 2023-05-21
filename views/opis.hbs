@@ -36,11 +36,12 @@
       <p class="mb-0">
         Za zunanji vir sem uporabil API ponudnika visualcrossing.com, ki vrača podatke o vremenu na iskani lokaciji. Ta API sem izbral, ker je zelo
           prilagodljiv v smislu izbire vrnjenih podatkov. <br><br>
-          Točen URL naslov, ki sem ga uporabil: https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${imeDestinacije}/next7days?unitGroup=metric&elements=datetime%2CdatetimeEpoch%2Cname%2Clatitude%2Clongitude%2Ctempmax%2Ctempmin%2Ctemp%2Cwindspeed%2Cwindspeedmax%2Cpressure%2Cuvindex%2Csunrise%2Csunset%2Cconditions%2Cdescription&include=days&key=FQJKS22Y4MZ97GQXL5C7ZBFV6&contentType=json <br><br>
+          Točen URL naslov, ki sem ga uporabil: https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{imeDestinacije}/next7days?unitGroup=metric&elements=datetime%2Ctemp%2Cwindspeedmax%2Cconditions&include=days&key=FQJKS22Y4MZ97GQXL5C7ZBFV6&contentType=json <br><br>
           Osnovni URL naslov za ta API je precej krajši, vendar sem zaradi preglednosti vrnjenih podatkov dodal še nekaj filtrov, kar je precej vplivalo na dolžino URL-ja.
           Vir sem uporabil z neposrednim API klicom, in sicer za vsak vnos kraja v levem oknu ter pritisk na tipko "Dodaj destinacijo v bazo" se je klical zgoraj
           omenjeni API, vrnil podatke o vremenu na iskanem kraju, ti podatki pa so se nato shranili v Teaching API bazo in so nato služili za prikaz
-          podatkov o vremenu (v desnem oknu).
+          podatkov o vremenu (v desnem oknu). <br><br>
+          Na začetku so v Teaching API bazi prisotni testni primeri, da se lahko takoj stestira funkcionalnost.
       </p>
       <!-- KONEC: Uporabljeni zunanji viri podatkov -->
     </div>
@@ -55,9 +56,10 @@
     <div class="card-body">
       <!-- ZAČETEK: Master/detail načrtovalski vzorec -->
       <p class="mb-0">
-        <strong><i class="fa-solid fa-list-check me-1"></i>TO-DO</strong>: Na
-        tem mestu morate navesti uporabljen master/detail načrtovalski vzorec in
-        na kakšen način ga nameravate uporabiti.
+        Master/detail načrtovalski vzorec je implementiran v izpis vremena za izbran kraj. Master predstavlja seznam krajev v bazi (select -> option HTML elementi),
+          detail pa je izpis vremena, ki se pokaže ob kliku na gumb "Izpiši podatke o vremenu na izbrani destinaciji". Gre torej za generiranje ter izpis podatkov, ki je odvisen od izbora destinacije. <br><br>Prav
+          tako se v detail morda lahko šteje tudi vizualizacija z grafom, namreč ob izpisu vremena se prikaže tudi graf, ki še vizualno predstavlja potek vremena na tej destinaciji
+          v naslednjih 7 dneh.
       </p>
       <!-- KONEC: Master/detail načrtovalski vzorec -->
     </div>
@@ -73,14 +75,16 @@
     <div class="card-body">
       <!-- ZAČETEK: Uporabljeni zunanji viri podatkov -->
       <p class="mb-0">
-        <strong><i class="fa-solid fa-list-check me-1"></i>TO-DO</strong>: Na
-        tem mestu je potrebno navesti uporabljeno tehniko vizualizacije
-        podatkov, kjer obvezno uporabite knjižnico
-        <a href="https://canvasjs.com/" target="_blank"><i
-            class="fa-solid fa-earth-europe"
-          ></i>canvasJS</a>).
+          Za vizualizacijo podatkov o vremenu na izbranem kraju v naslednjih 7 dneh sem uporabil knjižnico <a href="https://canvasjs.com/" target="_blank"><i
+              class="fa-solid fa-earth-europe"
+      ></i>canvasJS</a>. Tip grafa je stolpčni diagram, ki ima na x osi datume (7 dni), na y osi pa povprečno temperaturo. <br><br>
+          Graf se zgenerira ob izbiri destinacije iz baze in kliku na gumb "Izpiši podatke o vremenu na izbrani destinaciji". <br><br>
+          To tehniko za vizualizacijo sem izbral, ker se mi zdi najbolj preprosta in uporabnikom prijazna, obenem pa poda hiter pregled nad potekom vremena.
+
       </p>
       <!-- KONEC: Uporabljeni zunanji viri podatkov -->
     </div>
   </div>
 </div>
+
+<script src="skripte/funkcionalnost.js"></script>
