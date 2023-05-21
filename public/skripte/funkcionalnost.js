@@ -1,6 +1,6 @@
 var baza = "jakepel03";
 var baseUrl = "https://teaching.lavbic.net/api/OIS/baza/" + baza + "/podatki/";
-var SENSEI_RACUN = "0x545FC391774843679197086d660fe90BAD6c4a57";
+var SENSEI_RACUN = "0xECF8dEe9C76031e7A79616053B63590A15Be630B";
 
 narediSeznamDestinacij();
 // naredi poizvedbo o vremenu na izbran API
